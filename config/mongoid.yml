@@ -4,7 +4,8 @@ development:
     # Defines the default client. (required)
     default:
       # Mongoid can connect to a URI accepted by the driver:
-      uri: mongodb+srv://MongoDB:MongoDB123@cluster0.ezukf.mongodb.net/WSD
+      uri: mongodb+srv://user:1234@cluster0.exlqrtk.mongodb.net/wsd-todo?retryWrites=true&w=majority
+
 
       # Otherwise define the parameters separately.
       # This defines the name of the default database that Mongoid can connect to.
@@ -172,8 +173,7 @@ production:
   clients:
     # Defines the default client. (required)
     default:
-      uri: mongodb+srv://MongoDB:MongoDB123@cluster0.ezukf.mongodb.net/WSD
-
+      uri: mongodb+srv://user:1234@cluster0.exlqrtk.mongodb.net/wsd-todo?retryWrites=true&w=majority
       # Otherwise define the parameters separately.
       # This defines the name of the default database that Mongoid can connect to.
       # (required).
