@@ -1,0 +1,41 @@
+<%= render "collections/sidebar", collections: @collections, user: @user %>
+<p>
+<h1>Pending Invitations:</h1>
+<h3>Friends Requests</h3>
+<% if @user.pending_invitations.length < 1%>
+    <p>No Friends Requests</p>
+<% else %>
+<table id="miyazaki">
+<thead>
+<tr><th>From<th colspan="2">Options
+<tbody style="text-align:center;">
+    <% for invitation in @user.pending_invitations%>
+        <tr>
+            <td>&nbsp;<%= User.find(Invitation.find(invitation.to_s).user_id).email %>&nbsp;</td>
+            <td>&nbsp;<%= link_to "Accept",  '/accept_invitation/'+invitation.to_s %>&nbsp;</td>
+            <td>&nbsp;<%= link_to "Refuse", '/refuse_invitation/'+invitation.to_s %>&nbsp;</td>
+        </tr>
+    <% end %>
+</table>
+<% end %>
+
+<hr class="solid">
+
+<h3>Collections Request</h3>
+<% if @user.pending_invitations_collection.length < 1 %>
+    <p>No Collections Requests</p>
+<% else %>
+    <table id="miyazaki">
+    <thead>
+    <tr><th>From<th>Collection<th colspan="2">Options
+    <tbody style="text-align:center;">
+        <% for invitation in @user.pending_invitations_collection%>
+            <tr>
+                <td>&nbsp;<%= User.find(InvCollection.find(invitation.to_s).user_id).email %>&nbsp;</td>
+                <td>&nbsp;<%= Collection.find(InvCollection.find(invitation.to_s).collection_id).title %>&nbsp;</td>
+                <td>&nbsp;<%= link_to "Accept",  '/accept_collection_invitation/'+invitation.to_s %>&nbsp;</td>
+                <td>&nbsp;<%= link_to "Refuse", '/refuse_collection_invitation/'+invitation.to_s %>&nbsp;</td>
+            </tr>
+        <% end %>
+    </table>
+<% end %>

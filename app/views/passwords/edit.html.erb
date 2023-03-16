@@ -1,0 +1,25 @@
+<%= render "collections/sidebar", collections: @collections, collection: @collection, user: @user %>
+  <p>
+  <div class="editBox">
+  <%= form_with model: Current.user, url: edit_password_path do |f| %>
+  <h2>Edit Password</h2>
+  <div id="profile-edit-area">
+    <table style="width: 100%;">
+      <tbody>
+        <tr>
+          <td><h5 class="edit-title"><%= f.label 'password:'%><br></h5></td>
+          <td><input type="password" class="profileInputBox" <%= f.password_field :password %></td>
+        </tr>
+        <tr style="vertical-align:middle">
+          <td><h5 class="edit-title"><%= f.label 'password_confirmation:', 'Confirm Password:'%><br></h5></td>
+          <td><input type="password" class="profileInputBox"<%= f.password_field :password_confirmation %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+  <div class="btn-submit">
+    <%= f.submit :class =>"btn_form"%>
+  </div>
+  </div>
+  <% end %>

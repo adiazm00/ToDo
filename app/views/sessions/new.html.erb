@@ -1,0 +1,30 @@
+<%= render "collections/sidebar", collections: @collections, collection: @collection %>
+<div class="screen">
+<div class="signin_grid">
+  <div class="h1_title"><h1>Sign In</h1></div>
+  <%= form_with url: sign_in_path do |f| %>
+      <div class="screen__content">
+        <form class="login">
+          <div class="login__field">
+            <i class="login__icon fas fa-user"></i>
+            <input type="text" class="login__input" placeholder="Email"<%= f.text_field :email, id: 'email' %></input>
+          </div>
+          <div class="login__field">
+            <i class="login__icon fas fa-lock"></i>
+            <input type="password" class="login__input" placeholder="Password"<%= f.password_field :password, id: 'password' %></input>
+          </div>
+          <div class="login__button">
+            <button class="button login__submit" <%= f.submit 'Log In' %>
+              <span class="button__text">Log In</span>
+            </button>	
+          </div>
+          <div class="register_addon">
+            <a>No account yet? <%= link_to "Sign Up", sign_up_path %></a>
+          </div>
+        </form>
+      </div>
+</div>
+</div>
+<% end %>
+
+	

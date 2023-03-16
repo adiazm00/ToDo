@@ -1,0 +1,90 @@
+<%= render "collections/sidebar", collections: @collections, user: @user %>
+<p>
+<div>
+<%= form_with url: "/search_user", method: :get do |form| %>
+<h2>Add Friends</h2>
+<div id="profile-edit-area">
+  <table style="margin-left:2%">
+    <tbody>
+      <tr>
+        <td><h5 class="edit-title">Email:<br></h5></td>
+        <td style="width:400px"><input type="text" class="profileInputBox" <%= form.text_field :email %></td>
+        <td><%= form.submit :class =>"btn_form", :value => "Send Request", :style => "margin-top:8px; margin-left:-40px;"%></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+<% end %>
+<% if @userFound == nil %> 
+  <% flash[:info] = "This user does not exist" %>
+<% elsif @userFound != ""%>
+  <% if @userFound != @user%>
+    <% if Invitation.find_by(friend_id: @userFound.id, user_id: @user.id, confirmed: 'false') == nil %>
+      <% if !@user.friend_with?(@userFound)%>
+        <% @user.send_invitation(@userFound) %>
+        <% Notification.create(user_id: @user.id, friend_id: @userFound.id, message: "Has sent you a friend request. You can find it in the 'friends' section") %>
+        <% flash[:success] = "Request sent successfully" %>
+      <% else %>
+        <% flash[:info] = "You are already friends" %>
+      <% end %>
+    <% else %>
+        <% flash[:info] = "There is another pending request" %>
+    <% end %>
+  <%else%>
+    <% flash[:info] = "You can't send a request to yourself" %>
+  <% end %>
+<% end %>
+<hr class="solid">
+
+<!-- Pending invitations -->
+<% if ((@user.pending_invitations.length + @user.pending_invitations_collection.length) > 0)%>
+  <h2>Pending Requests</h2>
+  <% if @user.pending_invitations.length > 0 %>
+    <span><%= link_to " Friend Requests (" + @user.pending_invitations.length.to_s + ")", index_invitations_path %></span><br>
+  <% end %>
+  <% if @user.pending_invitations_collection.length > 0%>
+    <span><%= link_to " Collection Requests (" + @user.pending_invitations_collection.length.to_s + ")", index_invitations_path %></span>
+  <% end %>
+  <hr class="solid">
+<% end %>
+
+<!-- Manage Friends -->
+<h2>Manage Friendships</h2>
+<% if @user.friends.empty? %>
+  <p>
+  <p>&nbsp;No friendships established</p>
+
+  <image style="width:75%; max-height:500px; min-width:400px; margin-top:-50px; margin-bottom:-50px" <%= image_tag("empty.svg") %></image>
+<% else %>
+<table id="miyazaki">
+<thead>
+<tr><th><th>Email<th>Friends Since<th colspan="3">Options
+<tbody style="text-align:center;" >
+  <% i = 0 %>
+  <% for friend in @user.friends%>
+    <% i = i+1 %>
+    <tr>
+      <td ><%= i %></td>
+      <td>&nbsp;<%= friend.email %>&nbsp;</td>
+      <%invitation = Invitation.find_by(user_id: @user.id, friend_id: friend.id)%>
+      <% if invitation != nil %>
+        <td>&nbsp;<%= invitation.updated_at.to_s.split(" ")[0] %>&nbsp;</td>
+        <td>&nbsp;<%= link_to "Request Collection", '/show_collections/'+friend.id %>&nbsp;</td>
+        <td>&nbsp;<%= link_to "Shared Collections", '/collections_shared/'+friend.id %>&nbsp;</td>
+        <td>&nbsp;<%= link_to "Remove Friend", '/delete_invitation/'+invitation.id %>&nbsp;</td>
+      <% else %>
+        <%invitation = Invitation.find_by(user_id: friend.id, friend_id: @user.id)%>
+        <td>&nbsp;<%= invitation.updated_at.to_s.split(" ")[0] %>&nbsp;</td>
+        <td>&nbsp;<%= link_to "Request Collection", '/show_collections/'+friend.id %>&nbsp;</td>
+        <td>&nbsp;<%= link_to "Shared Collections", '/collections_shared/'+friend.id %>&nbsp;</td>
+        <td>&nbsp;<%= link_to "Remove Friend", '/delete_invitation/'+invitation.id %>&nbsp;</td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+<% end %>
+
+
+
+

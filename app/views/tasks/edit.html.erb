@@ -1,0 +1,6 @@
+<%= render "collections/sidebar", collections: @collections, collection: @collection, user: @user %>
+    <p>
+    <div class="editBox">
+    <h1>Edit Task</h1>
+    <%= render "form", collection: @collection, task: @task%>
+    </div>

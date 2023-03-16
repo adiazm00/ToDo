@@ -1,0 +1,45 @@
+<%= render "collections/sidebar", collections: @collections, collection: @collection, user: @user %>
+  <p>    
+  <%= form_with model: [ collection =@collection, @task, task= collection.tasks.build ] do |form| %>
+  <div class="editBox">
+  <h2>Create a new task:</h2>
+  <div id="profile-edit-area">
+    <table style="width: 100%;">
+      <tbody>
+        <tr>
+          <td><h5 class="edit-title"><%= form.label :title %>:</h5></td>
+          <td><input type="text" class="profileInputBox" <%= form.text_field :title %></td>
+          <% task.errors.full_messages_for(:title).each do |message| %>
+            <div><%= message %></div>
+          <% end %>
+        </tr>
+        <tr>
+          <td><h5 class="edit-title"><%= form.label :description %>:</h5></td>
+          <td><textarea oninput="auto_grow(this)" class="profileInputBox-description"<%= form.text_area :description %></textarea>
+          <% task.errors.full_messages_for(:description).each do |message| %>
+            <div><%= message %></div>
+          <% end %>
+        </tr>
+        <tr>
+          <td><h5 class="edit-title"><%= form.label :priority %>:</h5></td>
+          <td class="td_task"><%= form.select(:priority, ['High', 'Medium', 'Low'],{}, {:class =>"task_status"}) %></td>
+          <% task.errors.full_messages_for(:title).each do |message| %>
+            <div><%= message %></div>
+          <% end %>
+        </tr>
+        <tr>
+          <td><h5 class="edit-title"><%= form.label :status %>:</h5></td>
+          <td class="td_task"><%= form.select(:status, ['Unstarted','In progress'],{}, {:class =>"task_status"}) %></td>
+          <% task.errors.full_messages_for(:title).each do |message| %>
+            <div><%= message %></div>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+  <div class="btn-submit">
+    <%= form.submit :class =>"btn_form"%>
+  </div>
+  </div>
+  <% end %>

@@ -1,0 +1,32 @@
+<%= render "collections/sidebar", collections: @collections, user: @user %>
+<p>
+<h1>Notifications</h1>
+<% if @user.pending_notifications.length > 0 %>
+    <%= link_to 'Mark all as seen', '/delete_all_notifications', :id => "btn_edit_collection" %>
+    <div class="editBox" style="max-width: fit-content; margin-top: 20px ">
+    <% i = 0%>
+    <% for notification in @user.pending_notifications %>
+    <% i = i + 1%>
+    <div id="profile-edit-area">
+        <table style="width: 100%;">
+        <tbody>
+            <tr>
+            <td><h5>From: <%= User.find(Notification.find(notification).user_id).email.split('@')[0] %></h5></td>
+            </tr>
+            <tr>
+            <td style="width: 97%;"><%= Notification.find(notification).message %></td>
+            </tr>
+            <td class="edit-title"><%= link_to 'Mark as seen', '/delete_notification/'+notification, :id => "btn_edit_collection" %></td>
+        </tbody>
+        </table>
+    </div>
+    <% if i != @user.pending_notifications.length %>
+        <hr class="solid">
+    <% end %>
+    <p>
+    <% end %>
+</div>
+<% else %>
+    <p>No notifications</p>
+    <image style="width:80%; max-height:500px; min-width:400px; margin-top:-50px; margin-bottom:-70px" <%= image_tag("empty.svg") %></image>
+<% end %>

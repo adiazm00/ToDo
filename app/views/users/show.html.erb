@@ -1,0 +1,20 @@
+<%= render "collections/sidebar", collections: @collections, collection: @collection, user: @user %>
+<p>
+<h1><%=@userAux.email%></h1>
+<p>
+<div class="users_header">
+  <%= render "form", user: @userAux %>
+  <%= link_to image_tag("https://cdn-icons-png.flaticon.com/24/1345/1345874.png") + " Delete Account", '/destroy_user_admin/'+@userAux.id, data: {confirm: "Are you sure?"}, :id => "btn_delete_user" %>
+</div>
+<hr class="solid">
+<h3>Collections:</h3>
+<% i = 0%>
+<ul><%@collectionsUser.each do |collection| %>
+<% i = i + 1%>
+    <li><%= link_to collection.title, collection, :style =>"font-size:1.2em"%><br></li>
+<% end %>
+</ul>
+<%if i == 0%>
+<p>This user does not have any collections</p>
+<%end%>
+<hr class="solid">

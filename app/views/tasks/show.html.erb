@@ -1,0 +1,21 @@
+<%= render "collections/sidebar", collections: @collections, collection: @collection %>
+  <p>
+  <div class="editBox">
+  <h1><%= @task.title %></h1>
+  <div class="cll_descr">
+    <h4>Description: </h4><p ><%= @task.description %></p>
+  </div>
+  <div class="cll_descr">
+    <h4>Priority: </h4><p><%= @task.priority %></p>
+  </div>
+  <div class="cll_descr">
+    <h4>Status: </h4><p><%= @task.status %></p>
+  </div>
+
+  <div class="cll_header">
+    <%= button_to image_tag("https://cdn-icons-png.flaticon.com/24/1827/1827933.png") + "  Edit Task", edit_collection_task_path(@collection, @task), :id => "btn_edit_collection", :method => :get %>
+    <%= link_to image_tag("https://cdn-icons-png.flaticon.com/24/1345/1345874.png") + " Destroy Task",  [@collection, @task], data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Are you sure?"
+                    }, :id => "btn_delete_collection", :method => :delete %>
+  </div>

@@ -1,0 +1,2 @@
+module InvCollectionsHelper
+end

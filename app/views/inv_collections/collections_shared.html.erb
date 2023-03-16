@@ -1,0 +1,47 @@
+<%= render "collections/sidebar", collections: @collections, user: @user %>
+<h1>Shared Collections</h1>
+<h4>Collections shared by me</h4>
+<% if @collectionsSharedByMe.length > 0 %>
+    <table id="miyazaki">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Shared Since</th>
+        <th colspan="2">Options</th>
+    <tbody style="text-align:center">
+        <% @collectionsSharedByMe.each do |invCollection| %>
+            <tr>
+                <td>&nbsp;<%= Collection.find(invCollection.collection_id).title %>&nbsp;</td>
+                <td>&nbsp;<%= invCollection.updated_at.to_s.split(" ")[0] %>&nbsp;</td>
+                <td>&nbsp;<%= link_to 'Stop Sharing', '/delete_collection_invitation/'+invCollection.id%>&nbsp;</td>
+                <td>&nbsp;<%= link_to 'View Collection', collection_path(invCollection.collection_id)%>&nbsp;</td>
+            </tr>
+        <% end %>
+    </table>
+<% else %>
+    <p>No shared collections with '<%= @friend.email %>'</p>
+<% end %>
+<hr class="solid">
+
+<h4>Collections shared with me</h4>
+<% if @collectionsSharedWithMe.length > 0 %>
+    <table id="miyazaki">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Shared Since</th>
+        <th colspan="2">Options</th>
+    <tbody style="text-align:center">
+        <% @collectionsSharedWithMe.each do |invCollection| %>
+            <tr>
+                <td>&nbsp;<%= Collection.find(invCollection.collection_id).title %>&nbsp;</td>
+                <td>&nbsp;<%= invCollection.updated_at.to_s.split(" ")[0] %>&nbsp;</td>
+                <td>&nbsp;<%= link_to 'Stop Sharing', '/delete_collection_invitation/'+invCollection.id %>&nbsp;</td>
+                <td>&nbsp;<%= link_to 'View Collection', collection_path(invCollection.collection_id)%>&nbsp;</td>
+            </tr>
+        <% end %>
+    </table>
+<% else %>
+    <p>No shared collections by '<%= @friend.email %>'</p>
+<% end %>
+<hr class="solid">

@@ -1,0 +1,16 @@
+<%= render "collections/sidebar", collections: @collections, user: @user %>
+<h1>Request Collection</h1>
+<h3>'<%= @friend.email %>' collections:</h3>
+<% i = 0%>
+<ul><%@collectionsFriend.each do |collection| %>
+<% i = i + 1%>
+    <div style="display: flex;"> 
+            <li><%= collection.title %>&nbsp;</li> 
+            <%= link_to 'Request', '/request_collection/'+collection.id%>
+    </div>
+<% end %>
+</ul>
+<%if i == 0%>
+<p>This user does not have collection</p>
+<%end%>
+<hr class="solid">

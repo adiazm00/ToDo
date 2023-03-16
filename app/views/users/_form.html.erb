@@ -1,0 +1,7 @@
+<%= form_with model: user do |form| %>
+  <% form.text_field :email %>
+    <td><%= form.select( :role, ['user', 'admin'],{}, {:class =>"user_status"}) %></td>
+    <div class="modify-role">
+      <%= form.submit :id =>"btn_edit_collection" , :value => "Update Role"%>
+    </div>
+  <% end %>

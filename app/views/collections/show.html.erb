@@ -1,0 +1,122 @@
+<%= render "sidebar", collections: @collections, collection: @collection, user: @user %>
+          <p>
+          <div class="collection_header">
+            <h1><%= @collection.title %><br></h1>
+            <div class="cll_descr">
+              <h4>Description:</h4><p id="collection_description"><%= @collection.description %></p>
+            </div>
+            <div class="cll_header">
+              <%= button_to image_tag("https://cdn-icons-png.flaticon.com/24/1827/1827933.png") + "  Edit Collection", edit_collection_path(@collection), :id => "btn_edit_collection", :method => :get %>
+              <%= link_to image_tag("https://cdn-icons-png.flaticon.com/24/1345/1345874.png") + " Destroy Collection", collection_path(@collection), data: {
+                                turbo_method: :delete,
+                                turbo_confirm: "Are you sure?"
+                              }, :id => "btn_delete_collection", :method => :delete %>
+            </div>
+          </div>
+          <hr class="solid">
+
+<script defer src="https://kit.fontawesome.com/628c8d2499.js" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+
+          <div class="tasks_header">
+            <h2>Tasks:</h2>
+            <%= button_to image_tag("https://cdn-icons-png.flaticon.com/24/6998/6998796.png") + "  New Task",  new_collection_task_path(@collection), :class => "btn_form", :method => :get %>
+          </div>
+          <p>
+          <% if Task.tasks_count(@collection) > 0 %>
+              <% if Task.priority_count(@collection, "High") > 0%> 
+              <div class="slid">
+              <% if Task.priority_count(@collection,"High") < 10%>                   
+              <h5 style="display:flex;">High Priority <div id="tasks_counter"><b><%= Task.priority_count(@collection, "High")%></b></div></h5>
+              <% else%>
+              <h5 style="display:flex;">High Priority <div id="tasks_counter"><b style="font-size:17px">+9</b></div></h5>
+              <%end%>
+              <div class="slides">
+              <% @collection.tasks.each do |task| %>
+                  <% if task.priority == "High" %> 
+                    <div class="task_card">
+                        <table><tbody>
+                              <tr>
+                                  <td style="text-align:left;">
+                                      <div id="task_title"><span style="font-size:medium;"><%= link_to task.title, collection_task_path(@collection, task) %></span><br/></div>
+                                      <span style="font-size:medium;"><%= task.status %></span>
+                                      <div style="display:flex; margin-top:10px">
+                                      <%= link_to image_tag("https://cdn-icons-png.flaticon.com/24/1827/1827933.png"), edit_collection_task_path(@collection, task), :id => "btn_edit_collection", :method => :get %>
+                                      <%= link_to image_tag("https://cdn-icons-png.flaticon.com/24/1345/1345874.png"),  [@collection, task], data: {
+                                            turbo_method: :delete,
+                                            turbo_confirm: "Are you sure?"
+                                          }, :id => "btn_delete_collection", :method => :get %>
+                                      </div>
+                                  </td>
+                              </tr>
+                        </tbody></table>
+                    </div>
+                  <% end %>
+             <% end %>
+             </div>
+             </div>
+            <% end %>
+            <% if Task.priority_count(@collection, "Medium") > 0%> 
+                <br>
+                <div class="slid">
+                <h5 style="display:flex;">Medium Priority <div id="tasks_counter"> <b> <%= Task.priority_count(@collection, "Medium")%></b></div></h5>
+                <div class="slides">
+                <% @collection.tasks.each do |task| %>
+                  <% if task.priority == "Medium" %> 
+                    <div class="task_card">
+                        <table><tbody>
+                              <tr>
+                                  <td style="text-align:left;">
+                                      <div id="task_title"><span style="font-size:medium;"><%= link_to task.title, collection_task_path(@collection, task) %></span><br/></div>
+                                      <span style="font-size:medium;"><%= task.status %></span>
+                                      <div style="display:flex; margin-top:10px">
+                                      <%= link_to image_tag("https://cdn-icons-png.flaticon.com/24/1827/1827933.png"), edit_collection_task_path(@collection, task), :id => "btn_edit_collection", :method => :get %>
+                                      <%= link_to image_tag("https://cdn-icons-png.flaticon.com/24/1345/1345874.png"),  [@collection, task], data: {
+                                            turbo_method: :delete,
+                                            turbo_confirm: "Are you sure?"
+                                          }, :id => "btn_delete_collection", :method => :get %>
+                                      </div>
+                                  </td>
+                              </tr>
+                        </tbody></table>
+                    </div>
+                  <% end %>
+            <% end %>
+            </div>
+            </div>
+            <% end %>
+            <% if Task.priority_count(@collection, "Low") > 0%> 
+              <br>
+              <div class="slid">
+              <h5 style="display:flex;">Low Priority <div id="tasks_counter"> <b> <%= Task.priority_count(@collection, "Low")%></b></div></h5>
+              <div class="slides">
+              <% @collection.tasks.each do |task| %>
+                  <% if task.priority == "Low" %> 
+                    <div class="task_card">
+                        <table><tbody>
+                              <tr>
+                                  <td style="text-align:left;">
+                                      <div id="task_title"><span style="font-size:medium;"><%= link_to task.title, collection_task_path(@collection, task) %></span><br/></div>
+                                      <span style="font-size:medium;"><%= task.status %></span>
+                                      <div style="display:flex; margin-top:10px">
+                                      <%= link_to image_tag("https://cdn-icons-png.flaticon.com/24/1827/1827933.png"), edit_collection_task_path(@collection, task), :id => "btn_edit_collection", :method => :get %>
+                                      <%= link_to image_tag("https://cdn-icons-png.flaticon.com/24/1345/1345874.png"),  [@collection, task], data: {
+                                            turbo_method: :delete,
+                                            turbo_confirm: "Are you sure?"
+                                          }, :id => "btn_delete_collection", :method => :get %>
+                                      </div>
+                                  </td>
+                              </tr>
+                        </tbody></table>
+                    </div>
+                  <% end %>
+             <% end %>
+            </div>
+            </div>
+            <% end %>
+          <% else %>
+            <p>No task has been created yet</p>
+            <image style="width:100%; max-height:500px; min-width:400px; margin-top:-70px; margin-bottom:-70px" <%= image_tag("empty.svg") %></image>
+          <% end %>
